@@ -9,7 +9,7 @@ web viewer invoked with `npx meta.txt` (or `bunx meta.txt` for Bun users).
 
 ```
 meta.txt/
-├── bin/meta.txt.ts        # CLI entry (arg parsing, starts server)
+├── bin/meta.ts        # CLI entry (arg parsing, starts server)
 ├── src/
 │   ├── server.ts      # Bun.serve, /api/docs, /api/doc, static UI
 │   └── assets.ts      # text-type imports of ui/dist → embedded in binary
@@ -52,21 +52,21 @@ cd ui && bun install      # installs React, Vite, Tailwind, shadcn deps
 Two terminals is the smoothest setup:
 
 ```sh
-# terminal 1 — Bun server on :4343 (serves /api + built UI)
+# terminal 1 — Bun server on :4242 (serves /api + built UI)
 bun run dev:server
 
-# terminal 2 — Vite dev server on :5173 (HMR for React), proxies /api → :4343
+# terminal 2 — Vite dev server on :5173 (HMR for React), proxies /api → :4242
 bun run dev:ui
 ```
 
 Work against <http://localhost:5173> while iterating on the UI.
-Point your browser at <http://127.0.0.1:4343> to see the production build.
+Point your browser at <http://127.0.0.1:4242> to see the production build.
 
 ## Build
 
 ```sh
 bun run build:ui          # → ui/dist/{index.html, assets/app.{js,css}}
-bun run build:bin         # → dist/meta.txt (standalone binary, bundles runtime + UI)
+bun run build:bin         # → dist/meta (standalone binary, bundles runtime + UI)
 bun run build             # both of the above
 ```
 
@@ -141,5 +141,5 @@ skipped.
   means a stale binary.
 - Vite is configured with deterministic filenames (`app.js`, `app.css`).
   Do not change that unless you also update `src/assets.ts`.
-- The server defaults to port `4343`. Override with `-p` on the CLI or
+- The server defaults to port `4242`. Override with `-p` on the CLI or
   the `META_PORT` env var.

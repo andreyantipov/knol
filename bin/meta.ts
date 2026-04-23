@@ -3,7 +3,7 @@ import { startServer } from "../src/server.ts";
 
 function parseArgs(argv: string[]) {
   const opts: { port: number; dir: string; open: boolean; help: boolean } = {
-    port: Number(process.env.META_PORT ?? 4343),
+    port: Number(process.env.META_PORT ?? 4242),
     dir: process.cwd(),
     open: false,
     help: false,

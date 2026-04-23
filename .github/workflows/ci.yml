@@ -32,8 +32,8 @@ jobs:
       - name: Smoke test binary
         run: |
           ./dist/meta -h
-          ./dist/meta -p 4343 -d ./docs &
+          ./dist/meta -p 4242 -d ./docs &
           PID=$!
           sleep 1
-          curl -sf http://127.0.0.1:4343/api/docs | head -c 200
+          curl -sf http://127.0.0.1:4242/api/docs | head -c 200
           kill $PID
