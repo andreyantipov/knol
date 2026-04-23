@@ -189,6 +189,24 @@ export default function App() {
   }, [activePaneIndex]);
 
   const active = panes[activePaneIndex]?.active ?? null;
+  const activePaneZoom = panes[activePaneIndex]?.zoom ?? 1;
+
+  const stepActivePaneZoom = useCallback(
+    (delta: -1 | 0 | 1) => {
+      setPanes((prev) => {
+        const idx = Math.min(activePaneIndex, prev.length - 1);
+        const pane = prev[idx];
+        if (!pane) return prev;
+        const cur = pane.zoom ?? 1;
+        const nextZoom = delta === 0 ? 1 : stepZoom(cur, delta);
+        if (nextZoom === cur) return prev;
+        const next = [...prev];
+        next[idx] = { ...pane, zoom: nextZoom };
+        return next;
+      });
+    },
+    [activePaneIndex],
+  );
 
   const openDoc = useCallback(
     (ref: DocRef | null) => {
@@ -460,47 +478,22 @@ export default function App() {
       } else if (mod && (e.key === "=" || e.key === "+")) {
         e.preventDefault();
         e.stopPropagation();
-        setPanes((prev) => {
-          const idx = Math.min(activePaneIndex, prev.length - 1);
-          const pane = prev[idx];
-          if (!pane) return prev;
-          const nextZoom = stepZoom(pane.zoom ?? 1, 1);
-          if (nextZoom === (pane.zoom ?? 1)) return prev;
-          const next = [...prev];
-          next[idx] = { ...pane, zoom: nextZoom };
-          return next;
-        });
+        stepActivePaneZoom(1);
       } else if (mod && e.key === "-") {
         e.preventDefault();
         e.stopPropagation();
-        setPanes((prev) => {
-          const idx = Math.min(activePaneIndex, prev.length - 1);
-          const pane = prev[idx];
-          if (!pane) return prev;
-          const nextZoom = stepZoom(pane.zoom ?? 1, -1);
-          if (nextZoom === (pane.zoom ?? 1)) return prev;
-          const next = [...prev];
-          next[idx] = { ...pane, zoom: nextZoom };
-          return next;
-        });
+        stepActivePaneZoom(-1);
       } else if (mod && e.key === "0") {
         e.preventDefault();
         e.stopPropagation();
-        setPanes((prev) => {
-          const idx = Math.min(activePaneIndex, prev.length - 1);
-          const pane = prev[idx];
-          if (!pane || (pane.zoom ?? 1) === 1) return prev;
-          const next = [...prev];
-          next[idx] = { ...pane, zoom: 1 };
-          return next;
-        });
+        stepActivePaneZoom(0);
       } else if (e.key === "Escape") {
         setPaletteOpen(false);
       }
     };
     window.addEventListener("keydown", onKey, true);
     return () => window.removeEventListener("keydown", onKey, true);
-  }, [activePaneIndex]);
+  }, [activePaneIndex, stepActivePaneZoom]);
 
   const allRefs = useMemo<DocRef[]>(
     () => roots.flatMap((r) => r.files.map((p) => ({ root: r.name, path: p }))),
@@ -578,6 +571,10 @@ export default function App() {
         roots={roots}
         active={active}
         stats={docStats}
+        zoom={activePaneZoom}
+        onZoomIn={() => stepActivePaneZoom(1)}
+        onZoomOut={() => stepActivePaneZoom(-1)}
+        onZoomReset={() => stepActivePaneZoom(0)}
       />
       <CommandPalette
         open={paletteOpen}

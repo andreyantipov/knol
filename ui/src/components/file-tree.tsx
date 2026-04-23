@@ -16,7 +16,7 @@ const BASE_PAD = 8;
 const INDENT = 14;
 const CHEV_HALF = 7;
 const STUB = INDENT - CHEV_HALF;
-const ICON_COL = 20;
+const ICON_COL = 18;
 const ROW_HEIGHT = 24;
 
 type FlatRow =
@@ -364,7 +364,7 @@ const Row = memo(function Row({
       <button
         type="button"
         onClick={() => onToggleDir(row.rootName, row.path)}
-        className="relative flex h-full w-full items-center gap-1.5 rounded-md pr-2 text-left text-sm text-sidebar-foreground hover:bg-foreground/5 hover:text-sidebar-accent-foreground"
+        className="relative flex h-full w-full items-center gap-1.5 rounded-md pr-2 text-left text-[13px] text-sidebar-foreground hover:bg-foreground/5 hover:text-sidebar-accent-foreground"
         style={{ paddingLeft: BASE_PAD + row.depth * INDENT }}
       >
         <TreeGuides
@@ -383,9 +383,9 @@ const Row = memo(function Row({
           )}
         />
         {row.open ? (
-          <FolderOpen className="size-3.5 shrink-0 text-muted-foreground" />
+          <FolderOpen className="size-3 shrink-0 text-muted-foreground" />
         ) : (
-          <Folder className="size-3.5 shrink-0 text-muted-foreground" />
+          <Folder className="size-3 shrink-0 text-muted-foreground" />
         )}
         <span className="truncate">{row.name}</span>
       </button>
@@ -398,7 +398,7 @@ const Row = memo(function Row({
       onClick={() => onSelect({ root: row.rootName, path: row.path })}
       title={row.path}
       className={cn(
-        "relative flex h-full w-full items-center gap-1.5 rounded-md pr-2 text-left text-sm",
+        "relative flex h-full w-full items-center gap-1.5 rounded-md pr-2 text-left text-[13px]",
         "hover:bg-foreground/5",
         isActive && "bg-foreground/10 text-foreground",
       )}
@@ -417,7 +417,7 @@ const Row = memo(function Row({
       />
       <FileText
         className={cn(
-          "size-3.5 shrink-0",
+          "size-3 shrink-0",
           isActive ? "text-foreground" : "text-muted-foreground",
         )}
       />
