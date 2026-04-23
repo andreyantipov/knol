@@ -49,18 +49,24 @@ cd ui && bun install      # installs React, Vite, Tailwind, shadcn deps
 
 ## Daily workflow
 
-Two terminals is the smoothest setup:
+Single command runs both the Bun API server (watch mode, :4242) and
+the Vite HMR dev server (:4243):
 
 ```sh
-# terminal 1 — Bun server on :4242 (serves /api + built UI)
-bun run dev:server
-
-# terminal 2 — Vite dev server on :5173 (HMR for React), proxies /api → :4242
-bun run dev:ui
+bun run dev
 ```
 
-Work against <http://localhost:5173> while iterating on the UI.
-Point your browser at <http://127.0.0.1:4242> to see the production build.
+Work against <http://localhost:4243> while iterating on the UI — Vite
+proxies `/api` and `/api/ws` to :4242. `Ctrl+C` tears down both
+processes.
+
+If 4243 is taken, Vite picks the next free port automatically
+(`strictPort: false`). To split the two back into separate terminals
+(e.g. restart just one side), use `bun run dev:server` and
+`bun run dev:ui` independently.
+
+Point a browser at <http://127.0.0.1:4242> to see the production build
+served from `ui/dist/` instead of HMR.
 
 ## Build
 
