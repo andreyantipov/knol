@@ -589,7 +589,6 @@ export default function App() {
               onStatsChange={handleStatsChange}
               onOpenPalette={() => setPaletteOpen(true)}
               onPaneFocus={handlePaneFocus}
-              onPaneZoom={stepPaneZoom}
               onTabSelect={handleTabSelect}
               onTabClose={handleTabClose}
               onSplit={handleSplit}
