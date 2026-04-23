@@ -1,8 +1,11 @@
 import { readdir, readFile, stat } from "node:fs/promises";
 import { watch } from "node:fs";
 import { basename, join, relative, resolve, sep } from "node:path";
+import pkg from "../package.json" with { type: "json" };
 import { ASSETS } from "./assets.ts";
 import { ACPAgent, type ChatEvent } from "./acp.ts";
+
+export const VERSION: string = (pkg as { version: string }).version;
 import {
   loadHistory,
   saveHistory,
@@ -359,7 +362,7 @@ async function handleHttp(
       }),
     );
     broadcast({ type: "scan:done" });
-    return Response.json({ roots: result });
+    return Response.json({ roots: result, version: VERSION });
   }
 
   if (path === "/api/asset") {

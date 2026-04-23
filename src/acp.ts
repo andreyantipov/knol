@@ -8,6 +8,9 @@ import {
   type SessionNotification,
   type StopReason,
 } from "@agentclientprotocol/sdk";
+import pkg from "../package.json" with { type: "json" };
+
+const VERSION: string = (pkg as { version: string }).version;
 
 export type ChatEvent =
   | { type: "chat:state"; state: "starting" | "ready" | "error"; error?: string }
@@ -120,7 +123,7 @@ export class ACPAgent {
         fs: { readTextFile: false, writeTextFile: false },
         terminal: true,
       },
-      clientInfo: { name: "meta.txt", version: "0.2.1" },
+      clientInfo: { name: "meta.txt", version: VERSION },
     });
 
     try {

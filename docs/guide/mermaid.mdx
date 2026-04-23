@@ -1,0 +1,80 @@
+---
+title: Mermaid (.mdx)
+---
+
+# Mermaid in `.mdx`
+
+`meta.txt` treats `.mdx` the same as `.md` in the viewer (frontmatter
+shows as-is, since we don't parse MDX components). Mermaid fences work
+identically.
+
+## Graph
+
+```mermaid
+graph TD
+    Root[meta.txt root] --> Bin[bin/meta.ts]
+    Root --> Src[src/]
+    Root --> Ui[ui/]
+    Src --> Server[server.ts]
+    Src --> Acp[acp.ts]
+    Src --> Assets[assets.ts<br/>auto-generated]
+    Ui --> App[App.tsx]
+    Ui --> DocContent[doc-content.tsx]
+    DocContent --> Mermaid[lib/mermaid.ts]
+```
+
+## ER
+
+```mermaid
+erDiagram
+    ROOT ||--o{ FILE : contains
+    FILE ||--o{ MERMAID_BLOCK : "may embed"
+    ROOT {
+        string name
+        string path
+    }
+    FILE {
+        string path
+        string kind
+    }
+    MERMAID_BLOCK {
+        string source
+        string svg
+    }
+```
+
+## Journey
+
+```mermaid
+journey
+    title Dev flow
+    section Daily
+      edit markdown: 5: Me
+      see live reload: 5: Me
+      draw mermaid: 4: Me
+    section Release
+      bump version: 3: Me
+      bun run build: 5: Me
+      npm publish: 4: Me
+```
+
+## Git graph
+
+```mermaid
+gitGraph
+    commit id: "0.2.1"
+    branch release/0-3-0
+    checkout release/0-3-0
+    commit id: "version via API"
+    commit id: "mermaid support"
+    commit id: "README"
+    checkout main
+    merge release/0-3-0 tag: "v0.3.0"
+    branch release/0-4-0
+    commit id: "excalidraw viewer"
+```
+
+## Prose around it
+
+This paragraph sits between diagrams to make sure spacing, margins, and
+the centered-svg layout of `.mermaid-block` look right alongside text.

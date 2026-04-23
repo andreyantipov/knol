@@ -1,6 +1,6 @@
 {
   "name": "meta.txt",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "llms.txt, but for your repo — a living markdown knowledge base browsable via npx meta.txt",
   "type": "module",
   "bin": {
@@ -17,10 +17,12 @@
     "dev:ui": "cd ui && bun run dev",
     "dev:server": "bun run --watch bin/meta.ts",
     "build:ui": "cd ui && bun run build",
+    "gen:assets": "bun scripts/gen-assets.ts",
     "build:bin": "bun build --compile --target=bun --outfile=dist/meta bin/meta.ts",
-    "build": "bun run build:ui && bun run build:bin",
+    "build": "bun run build:ui && bun run gen:assets && bun run build:bin",
     "start": "bun run bin/meta.ts",
-    "release": "bun run build:ui && npm publish"
+    "prepublishOnly": "bun run build:ui && bun run gen:assets",
+    "release": "bun run build:ui && bun run gen:assets && npm publish"
   },
   "repository": {
     "type": "git",

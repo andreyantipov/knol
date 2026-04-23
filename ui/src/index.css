@@ -175,9 +175,22 @@
   .markdown-body img,
   .markdown-body picture,
   .markdown-body figure,
-  .markdown-body svg,
   .markdown-body video,
   .markdown-body iframe {
     display: none;
+  }
+  .markdown-body svg {
+    display: none;
+  }
+  .markdown-body .mermaid-block {
+    @apply my-4 flex justify-center overflow-x-auto;
+  }
+  .markdown-body .mermaid-block svg {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+  .markdown-body .mermaid-error {
+    @apply my-4 rounded-md border border-destructive/40 bg-destructive/5 px-3 py-2 font-mono text-xs text-destructive;
   }
 }

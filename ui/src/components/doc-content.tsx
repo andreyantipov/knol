@@ -4,6 +4,7 @@ import { Readability } from "@mozilla/readability";
 import { fetchDoc, type DocRef } from "@/lib/api";
 import { subscribe } from "@/lib/events";
 import { cn } from "@/lib/utils";
+import { renderMermaid } from "@/lib/mermaid";
 
 marked.setOptions({ gfm: true, breaks: false });
 
@@ -83,6 +84,7 @@ export function DocContent({ doc, onStats }: Props) {
   const [raw, setRaw] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const markdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -148,6 +150,15 @@ export function DocContent({ doc, onStats }: Props) {
     const tokens = exactTokens ?? Math.ceil(raw.length / 4);
     return { kind, bytes, tokens, approx: exactTokens === null };
   }, [kind, raw, exactTokens]);
+
+  useEffect(() => {
+    if (kind !== "markdown" || !markdownHtml) return;
+    const el = markdownRef.current;
+    if (!el) return;
+    const controller = new AbortController();
+    renderMermaid(el, controller.signal).catch(() => {});
+    return () => controller.abort();
+  }, [kind, markdownHtml]);
 
   const onStatsRef = useRef(onStats);
   useEffect(() => {
@@ -229,6 +240,7 @@ export function DocContent({ doc, onStats }: Props) {
         {error && <div className="text-destructive">{error}</div>}
         {!loading && !error && kind === "markdown" && markdownHtml && (
           <div
+            ref={markdownRef}
             className="markdown-body"
             dangerouslySetInnerHTML={{ __html: markdownHtml }}
           />

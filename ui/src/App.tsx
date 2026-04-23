@@ -109,6 +109,7 @@ function filterPanes(panes: PaneState[], roots: RootEntry[]): PaneState[] {
 
 export default function App() {
   const [roots, setRoots] = useState<RootEntry[]>([]);
+  const [version, setVersion] = useState<string>("");
   const [err, setErr] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -313,9 +314,10 @@ export default function App() {
     let bootstrapped = false;
     const load = (initial: boolean) =>
       fetchDocs()
-        .then(({ roots }) => {
+        .then(({ roots, version }) => {
           if (cancelled) return;
           setRoots(roots);
+          if (version) setVersion(version);
 
           if (initial && !bootstrapped) {
             bootstrapped = true;
@@ -502,7 +504,7 @@ export default function App() {
         />
       </div>
       <StatusBar
-        version={__APP_VERSION__}
+        version={version}
         roots={roots}
         active={active}
         stats={docStats}

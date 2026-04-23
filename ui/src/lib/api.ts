@@ -1,5 +1,5 @@
 export type RootEntry = { name: string; path: string; files: string[] };
-export type DocsResponse = { roots: RootEntry[] };
+export type DocsResponse = { roots: RootEntry[]; version: string };
 
 export type DocRef = { root: string; path: string };
 

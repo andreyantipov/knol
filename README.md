@@ -30,6 +30,9 @@ chat prompts you type yourself.
   pre-formatted), `.html` / `.htm` (rendered via Mozilla Readability in
   reader mode; falls back to sandboxed `<iframe>` if extraction fails).
   Images and other embedded media are stripped from the rendered output.
+- **Mermaid diagrams** — fenced ` ```mermaid ` code blocks are rendered
+  to inline SVG client-side via [mermaid](https://mermaid.js.org/),
+  themed to match the app.
 - **File tree** — Monaco-style tree with vertical indent guides and
   T-connectors, expand/collapse state persisted per-folder. Auto-expands
   ancestors of the active file.
@@ -63,8 +66,8 @@ chat prompts you type yourself.
 ### Tabs & split view
 
 - **Tabs per pane** — open docs stay open as tabs, click to switch,
-  middle-click or hover-`×` to close. `⌘W` closes the active tab,
-  `⌘[` / `⌘]` cycle through tabs in the active pane.
+  middle-click or hover-`×` to close. `⌘[` / `⌘]` cycle through tabs
+  in the active pane.
 - **Horizontal split** — the split button in the tab bar duplicates the
   active tab into a second pane on the right with a resizable handle
   between them. Close the last tab in the right pane to collapse back
@@ -115,7 +118,6 @@ Default port is `4242` (override with `-p` or `META_PORT`).
 | `⌘K` / `Ctrl+K`  | open command palette (files + content)    |
 | `⌘J` / `Ctrl+J`  | toggle chat panel                         |
 | `⌘B` / `Ctrl+B`  | toggle sidebar                            |
-| `⌘W` / `Ctrl+W`  | close active tab                          |
 | `⌘[` / `⌘]`      | cycle tabs in the active pane             |
 | `↑` / `↓`        | navigate palette results                  |
 | `↵`              | open selected result / send chat message  |
