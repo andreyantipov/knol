@@ -2,6 +2,10 @@
 
 **A local doc browser and Claude chat for your repo.**
 
+> **Status: alpha.** Pre-1.0, so expect breaking changes between minor
+> versions and rough edges in the UI. Feedback and bug reports welcome
+> via [GitHub issues](https://github.com/andreyantipov/meta.txt/issues).
+
 Point `npx meta.txt` at one or more directories and read your docs in
 a fast, focused viewer with tabs, split view, full-text search, and an
 optional Claude side-panel that can take the open doc as context.
