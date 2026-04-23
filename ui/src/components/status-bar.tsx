@@ -37,25 +37,21 @@ export function StatusBar({ version, roots, active, stats }: Props) {
         : `${roots.length} roots · ${totalFiles.toLocaleString()} docs`;
 
   return (
-    <footer className="flex h-6 shrink-0 items-center gap-6 border-t border-border bg-muted/30 px-3 text-[11px] text-muted-foreground">
-      <div className="flex shrink-0 items-center gap-2">
-        <span className="font-medium text-foreground/70">meta.txt</span>
-        <span className="font-mono tabular-nums">v{version}</span>
-        <Sep />
-        <span className="tabular-nums">{rootLabel}</span>
-      </div>
-
-      <div className="min-w-0 flex-1">
-        {active ? (
-          <span className="block truncate font-mono text-foreground/70">
-            {active.root}/{active.path}
-          </span>
-        ) : (
-          <span className="text-muted-foreground/50">
-            no document selected
-          </span>
-        )}
-      </div>
+    <footer className="flex h-6 shrink-0 items-center gap-2 border-t border-border bg-muted/30 px-3 text-[11px] text-muted-foreground">
+      <span className="shrink-0 font-medium text-foreground/70">meta.txt</span>
+      <span className="shrink-0 font-mono tabular-nums">v{version}</span>
+      <Sep />
+      <span className="shrink-0 tabular-nums">{rootLabel}</span>
+      <Sep />
+      {active ? (
+        <span className="min-w-0 flex-1 truncate font-mono text-foreground/70">
+          {active.root}/{active.path}
+        </span>
+      ) : (
+        <span className="min-w-0 flex-1 truncate text-muted-foreground/50">
+          no document selected
+        </span>
+      )}
 
       {active && stats && (
         <div className="flex shrink-0 items-center gap-2">
