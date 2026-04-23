@@ -1,0 +1,39 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: latest
+
+      - name: Install root deps
+        run: bun install --frozen-lockfile
+
+      - name: Install UI deps
+        run: bun install --frozen-lockfile
+        working-directory: ui
+
+      - name: Build UI
+        run: bun run build:ui
+
+      - name: Build binary
+        run: bun run build:bin
+
+      - name: Smoke test binary
+        run: |
+          ./dist/knol -h
+          ./dist/knol -p 4343 -d ./docs &
+          PID=$!
+          sleep 1
+          curl -sf http://127.0.0.1:4343/api/docs | head -c 200
+          kill $PID
