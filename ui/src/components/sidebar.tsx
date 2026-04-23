@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Files, SidebarSimple } from "@phosphor-icons/react";
 import { FileTree } from "@/components/file-tree";
+import { Outline } from "@/components/outline";
 import type { DocRef, RootEntry } from "@/lib/api";
 import { subscribe } from "@/lib/events";
 
@@ -109,9 +110,12 @@ export function Sidebar({
           </div>
         </div>
       ) : (
-        <nav className="min-h-0 flex-1 px-1.5">
-          <FileTree roots={roots} active={active} onSelect={onSelect} />
-        </nav>
+        <>
+          <nav className="min-h-0 flex-1 px-1.5">
+            <FileTree roots={roots} active={active} onSelect={onSelect} />
+          </nav>
+          <Outline active={active} />
+        </>
       )}
     </aside>
   );

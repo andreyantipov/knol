@@ -36,6 +36,10 @@ chat prompts you type yourself.
 - **File tree** — Monaco-style tree with vertical indent guides and
   T-connectors, expand/collapse state persisted per-folder. Auto-expands
   ancestors of the active file.
+- **Outline** — heading TOC for the active document, shown below the
+  file tree. Works for `.md` / `.mdx` (from `marked` tokens) and `.html`
+  (scraped from the rendered DOM). Click any entry to smooth-scroll to
+  that heading.
 - **Live reload** — the server watches your roots and pushes updates over
   WebSocket; edits show up without a refresh.
 

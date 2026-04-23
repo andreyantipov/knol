@@ -1,12 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { marked } from "marked";
 import { Readability } from "@mozilla/readability";
 import { fetchDoc, type DocRef } from "@/lib/api";
 import { subscribe } from "@/lib/events";
 import { cn } from "@/lib/utils";
 import { renderMermaid } from "@/lib/mermaid";
-
-marked.setOptions({ gfm: true, breaks: false });
+import { parseMarkdown, injectHeadingIds, type Heading } from "@/lib/toc";
+import { setOutline, clearOutline } from "@/lib/outlines";
 
 export type DocKind = "markdown" | "text" | "html";
 
@@ -85,6 +84,7 @@ export function DocContent({ doc, onStats }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const markdownRef = useRef<HTMLDivElement>(null);
+  const htmlRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -119,10 +119,14 @@ export function DocContent({ doc, onStats }: Props) {
 
   const kind: DocKind = useMemo(() => kindOf(doc.path), [doc.path]);
 
-  const markdownHtml = useMemo(
-    () => (kind === "markdown" && raw ? (marked.parse(raw) as string) : ""),
+  const parsed = useMemo(
+    () =>
+      kind === "markdown" && raw
+        ? parseMarkdown(raw)
+        : { html: "", headings: [] as Heading[] },
     [kind, raw],
   );
+  const markdownHtml = parsed.html;
 
   const [exactTokens, setExactTokens] = useState<number | null>(null);
 
@@ -159,6 +163,26 @@ export function DocContent({ doc, onStats }: Props) {
     renderMermaid(el, controller.signal).catch(() => {});
     return () => controller.abort();
   }, [kind, markdownHtml]);
+
+  useEffect(() => {
+    if (kind === "markdown" && raw !== null) {
+      setOutline(doc, parsed.headings);
+    }
+    return () => {
+      clearOutline(doc);
+    };
+  }, [kind, raw, parsed.headings, doc.root, doc.path]);
+
+  useEffect(() => {
+    if (kind !== "html") return;
+    const el = htmlRef.current;
+    if (!el) return;
+    const headings = injectHeadingIds(el);
+    setOutline(doc, headings);
+    return () => {
+      clearOutline(doc);
+    };
+  }, [kind, raw, doc.root, doc.path]);
 
   const onStatsRef = useRef(onStats);
   useEffect(() => {
@@ -251,7 +275,7 @@ export function DocContent({ doc, onStats }: Props) {
           </pre>
         )}
         {!loading && !error && kind === "html" && article && (
-          <div className="markdown-body">
+          <div ref={htmlRef} className="markdown-body">
             {article.title && <h1>{article.title}</h1>}
             {article.byline && (
               <p className="text-muted-foreground">{article.byline}</p>
