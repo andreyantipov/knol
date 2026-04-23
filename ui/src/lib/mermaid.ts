@@ -9,6 +9,7 @@ function loadMermaid() {
         securityLevel: "strict",
         theme: isDark ? "dark" : "default",
         fontFamily: "inherit",
+        suppressErrorRendering: true,
       });
       return m.default;
     });
@@ -41,6 +42,8 @@ export async function renderMermaid(container: HTMLElement, signal?: AbortSignal
       pre.replaceWith(wrapper);
     } catch (err) {
       if (signal?.aborted) return;
+      document.getElementById(id)?.remove();
+      document.getElementById(`d${id}`)?.remove();
       const msg = err instanceof Error ? err.message : String(err);
       const fallback = document.createElement("div");
       fallback.className = "mermaid-error";
