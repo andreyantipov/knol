@@ -1,9 +1,9 @@
 # meta.txt
 
-Markdown docs viewer, distributed as a single executable. Run it with
-`bunx meta.txt` (or the compiled binary) inside any project and it streams a
-local web UI that lists all `.md` files in the cwd and renders the one
-you pick.
+**llms.txt, but for your repo.** A living markdown knowledge base for a
+codebase — reasoning, decisions, architecture — that travels with the code
+itself. The artifact is the markdown in the repo; the tool is an optional
+web viewer invoked with `npx meta.txt` (or `bunx meta.txt` for Bun users).
 
 ## Repo layout
 
@@ -78,8 +78,9 @@ disk.
 Consumer usage after publish:
 
 ```sh
-bunx meta.txt                 # Bun users — runs from the TS source
-./meta.txt                    # anyone — runs the compiled single-file binary
+npx meta.txt                  # Node users — fetches and runs
+bunx meta.txt                 # Bun users — same, faster
+./dist/meta                   # anyone — compiled single-file binary
 ```
 
 ## shadcn/ui

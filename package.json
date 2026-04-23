@@ -1,7 +1,7 @@
 {
   "name": "meta.txt",
   "version": "0.1.0",
-  "description": "Minimal markdown docs viewer — bunx meta.txt and browse .md files in your project",
+  "description": "llms.txt, but for your repo — a living markdown knowledge base browsable via npx meta.txt",
   "type": "module",
   "bin": {
     "meta.txt": "bin/meta.ts"

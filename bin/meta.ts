@@ -25,9 +25,11 @@ if (opts.help) {
   console.log(`meta.txt — markdown docs viewer
 
 Usage:
-  bunx meta.txt [dir]            serve .md files from <dir> (default: cwd)
-  bunx meta.txt -p 4000          use port 4000
-  bunx meta.txt --open           open browser on start
+  npx meta.txt [dir]            serve .md files from <dir> (default: cwd)
+  npx meta.txt -p 4000          use port 4000
+  npx meta.txt --open           open browser on start
+
+Bun users: replace npx with bunx.
 `);
   process.exit(0);
 }

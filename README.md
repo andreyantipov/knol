@@ -1,15 +1,27 @@
 # meta.txt
 
-Minimal markdown docs viewer. Run `bunx meta.txt` inside any project and
-browse its `.md` files in a local web UI.
+**llms.txt, but for your repo.**
+
+A living markdown knowledge base that travels with your code — reasoning,
+decisions, architecture. Browse it with `npx meta.txt`, or just read the
+files.
 
 ## Usage
 
 ```sh
-bunx meta.txt                 # current directory
-bunx meta.txt ./docs          # specific folder
-bunx meta.txt -p 4000         # custom port
+npx meta.txt                 # current directory
+npx meta.txt ./docs          # specific folder
+npx meta.txt -p 4000         # custom port
 ```
 
-See [CLAUDE.md](./CLAUDE.md) for the development layout, build flow,
-and embedding notes.
+Bun users:
+
+```sh
+bunx meta.txt
+```
+
+Zero install — the artifact is the markdown in your repo. The tool is an
+optional web viewer.
+
+See [CLAUDE.md](./CLAUDE.md) for the development layout, build flow, and
+embedding notes.
