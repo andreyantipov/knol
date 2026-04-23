@@ -60,13 +60,16 @@ export class ACPAgent {
     this.emit({ type: "chat:state", state: "starting" });
 
     const npxCmd = process.platform === "win32" ? "npx.cmd" : "npx";
+    const cleanEnv = { ...process.env };
+    delete cleanEnv.ANTHROPIC_API_KEY;
+    delete cleanEnv.ANTHROPIC_AUTH_TOKEN;
     const child = spawn(
       npxCmd,
       ["-y", "@agentclientprotocol/claude-agent-acp"],
       {
         cwd: this.cwd,
         stdio: ["pipe", "pipe", "pipe"],
-        env: process.env,
+        env: cleanEnv,
       },
     );
     this.child = child;
@@ -117,7 +120,7 @@ export class ACPAgent {
         fs: { readTextFile: false, writeTextFile: false },
         terminal: true,
       },
-      clientInfo: { name: "meta.txt", version: "0.2.0" },
+      clientInfo: { name: "meta.txt", version: "0.2.1" },
     });
 
     try {
