@@ -4,7 +4,7 @@
   "description": "Minimal markdown docs viewer — bunx knol and browse .md files in your project",
   "type": "module",
   "bin": {
-    "knol": "./bin/knol.ts"
+    "knol": "bin/knol.ts"
   },
   "files": [
     "bin",
