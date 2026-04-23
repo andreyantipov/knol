@@ -43,7 +43,12 @@ async function findFreePort(start: number, tries = 50): Promise<number> {
 }
 
 const apiPort = await findFreePort(4242);
-console.log(`[dev] api: http://127.0.0.1:${apiPort}`);
+const resolvedUiPort = uiPort
+  ? Number(uiPort)
+  : await findFreePort(apiPort + 1);
+
+console.log(`[dev] api:     http://127.0.0.1:${apiPort}`);
+console.log(`[dev] browser: http://127.0.0.1:${resolvedUiPort}`);
 
 const server = spawn(
   "bun",
@@ -57,7 +62,7 @@ const ui = spawn("bun", ["run", "dev"], {
   env: {
     ...process.env,
     META_DEV_API_PORT: String(apiPort),
-    ...(uiPort ? { META_DEV_PORT: uiPort } : {}),
+    META_DEV_PORT: String(resolvedUiPort),
   },
 });
 
