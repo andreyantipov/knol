@@ -35,7 +35,7 @@ export function Sidebar({ files, activePath, onSelect }: Props) {
       <div className="border-b border-sidebar-border p-3">
         <div className="mb-2 flex items-center gap-2 px-1">
           <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-            knol
+            meta.txt
           </span>
         </div>
         <div className="relative">

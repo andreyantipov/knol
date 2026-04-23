@@ -1,15 +1,15 @@
-# knol
+# meta.txt
 
 Markdown docs viewer, distributed as a single executable. Run it with
-`bunx knol` (or the compiled binary) inside any project and it streams a
+`bunx meta.txt` (or the compiled binary) inside any project and it streams a
 local web UI that lists all `.md` files in the cwd and renders the one
 you pick.
 
 ## Repo layout
 
 ```
-knol/
-├── bin/knol.ts        # CLI entry (arg parsing, starts server)
+meta.txt/
+├── bin/meta.txt.ts        # CLI entry (arg parsing, starts server)
 ├── src/
 │   ├── server.ts      # Bun.serve, /api/docs, /api/doc, static UI
 │   └── assets.ts      # text-type imports of ui/dist → embedded in binary
@@ -66,7 +66,7 @@ Point your browser at <http://127.0.0.1:4343> to see the production build.
 
 ```sh
 bun run build:ui          # → ui/dist/{index.html, assets/app.{js,css}}
-bun run build:bin         # → dist/knol (standalone binary, bundles runtime + UI)
+bun run build:bin         # → dist/meta.txt (standalone binary, bundles runtime + UI)
 bun run build             # both of the above
 ```
 
@@ -78,8 +78,8 @@ disk.
 Consumer usage after publish:
 
 ```sh
-bunx knol                 # Bun users — runs from the TS source
-./knol                    # anyone — runs the compiled single-file binary
+bunx meta.txt                 # Bun users — runs from the TS source
+./meta.txt                    # anyone — runs the compiled single-file binary
 ```
 
 ## shadcn/ui
@@ -141,4 +141,4 @@ skipped.
 - Vite is configured with deterministic filenames (`app.js`, `app.css`).
   Do not change that unless you also update `src/assets.ts`.
 - The server defaults to port `4343`. Override with `-p` on the CLI or
-  the `KNOL_PORT` env var.
+  the `META_PORT` env var.

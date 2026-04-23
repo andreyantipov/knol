@@ -31,8 +31,8 @@ jobs:
 
       - name: Smoke test binary
         run: |
-          ./dist/knol -h
-          ./dist/knol -p 4343 -d ./docs &
+          ./dist/meta -h
+          ./dist/meta -p 4343 -d ./docs &
           PID=$!
           sleep 1
           curl -sf http://127.0.0.1:4343/api/docs | head -c 200

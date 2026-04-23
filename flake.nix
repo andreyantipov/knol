@@ -1,5 +1,5 @@
 {
-  description = "knol — markdown docs viewer (bun + vite + shadcn)";
+  description = "meta.txt — markdown docs viewer (bun + vite + shadcn)";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
@@ -18,7 +18,7 @@
           ];
 
           shellHook = ''
-            echo "knol dev shell"
+            echo "meta.txt dev shell"
             echo "  bun  $(bun --version)"
             echo "  node $(node --version)"
           '';

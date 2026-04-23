@@ -13,7 +13,7 @@
 
 ## Pieces
 
-- **`bin/knol.ts`** — CLI entry point, parses args, starts the server.
+- **`bin/meta.txt.ts`** — CLI entry point, parses args, starts the server.
 - **`src/server.ts`** — `Bun.serve`, two small APIs + static assets.
 - **`src/assets.ts`** — pulls `ui/dist/*` into the bundle at build time
   using text-type imports, so `bun build --compile` embeds them.

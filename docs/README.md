@@ -1,7 +1,7 @@
-# knol docs
+# meta.txt docs
 
 Welcome. This folder exists so you can practice editing content while
-developing `knol` itself. When you run `bun run dev:server` from the
+developing `meta.txt` itself. When you run `bun run dev:server` from the
 project root, the sidebar picks these files up automatically.
 
 ## Layout

@@ -3,7 +3,7 @@ import { startServer } from "../src/server.ts";
 
 function parseArgs(argv: string[]) {
   const opts: { port: number; dir: string; open: boolean; help: boolean } = {
-    port: Number(process.env.KNOL_PORT ?? 4343),
+    port: Number(process.env.META_PORT ?? 4343),
     dir: process.cwd(),
     open: false,
     help: false,
@@ -22,19 +22,19 @@ function parseArgs(argv: string[]) {
 const opts = parseArgs(process.argv.slice(2));
 
 if (opts.help) {
-  console.log(`knol — markdown docs viewer
+  console.log(`meta.txt — markdown docs viewer
 
 Usage:
-  bunx knol [dir]            serve .md files from <dir> (default: cwd)
-  bunx knol -p 4000          use port 4000
-  bunx knol --open           open browser on start
+  bunx meta.txt [dir]            serve .md files from <dir> (default: cwd)
+  bunx meta.txt -p 4000          use port 4000
+  bunx meta.txt --open           open browser on start
 `);
   process.exit(0);
 }
 
 const server = startServer({ port: opts.port, root: opts.dir });
 const url = `http://${server.hostname}:${server.port}`;
-console.log(`knol  ${url}  (docs: ${opts.dir})`);
+console.log(`meta.txt  ${url}  (docs: ${opts.dir})`);
 
 if (opts.open) {
   const cmd = process.platform === "darwin" ? "open" : process.platform === "win32" ? "start" : "xdg-open";

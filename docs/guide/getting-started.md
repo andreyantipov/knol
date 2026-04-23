@@ -23,7 +23,7 @@ Open <http://localhost:5173>. Vite proxies `/api/*` to the server on
 
 ```sh
 bun run build
-./dist/knol
+./dist/meta.txt
 ```
 
 The binary contains the UI assets and the Bun runtime — no Node, no
