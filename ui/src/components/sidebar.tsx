@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Files, SidebarSimple } from "@phosphor-icons/react";
-import { usePanelRef } from "react-resizable-panels";
+import { useDefaultLayout, usePanelRef } from "react-resizable-panels";
 import { FileTree } from "@/components/file-tree";
 import { Outline } from "@/components/outline";
 import {
@@ -145,6 +145,11 @@ type BodyProps = {
 function SidebarBody({ roots, active, onSelect }: BodyProps) {
   const outlineRef = usePanelRef();
   const [outlineCollapsed, setOutlineCollapsed] = useState(false);
+  const { defaultLayout, onLayoutChanged } = useDefaultLayout({
+    id: "meta.txt:sidebar-panels:v3",
+    panelIds: ["files", "outline"],
+    storage: typeof window === "undefined" ? undefined : window.localStorage,
+  });
 
   const toggleOutline = () => {
     const p = outlineRef.current;
@@ -152,7 +157,7 @@ function SidebarBody({ roots, active, onSelect }: BodyProps) {
     if (p.isCollapsed()) {
       p.expand();
       queueMicrotask(() => {
-        if (p.isCollapsed() || p.getSize() < 15) p.resize(35);
+        if (p.isCollapsed() || p.getSize().asPercentage < 15) p.resize(35);
       });
     } else {
       p.collapse();
@@ -168,10 +173,12 @@ function SidebarBody({ roots, active, onSelect }: BodyProps) {
   return (
     <ResizablePanelGroup
       orientation="vertical"
-      autoSaveId="meta.txt:sidebar-panels:v3"
+      id="meta.txt:sidebar-panels:v3"
+      defaultLayout={defaultLayout}
+      onLayoutChanged={onLayoutChanged}
       className="min-h-0 flex-1"
     >
-      <ResizablePanel id="files" order={1} defaultSize={65} minSize={20}>
+      <ResizablePanel id="files" defaultSize={65} minSize={20}>
         <nav className="h-full min-h-0">
           <FileTree roots={roots} active={active} onSelect={onSelect} />
         </nav>
@@ -179,14 +186,15 @@ function SidebarBody({ roots, active, onSelect }: BodyProps) {
       <ResizableHandle />
       <ResizablePanel
         id="outline"
-        order={2}
         panelRef={outlineRef}
         collapsible
         collapsedSize="42px"
         defaultSize={35}
         minSize={15}
-        onCollapse={() => setOutlineCollapsed(true)}
-        onExpand={() => setOutlineCollapsed(false)}
+        onResize={() => {
+          const p = outlineRef.current;
+          if (p) setOutlineCollapsed(p.isCollapsed());
+        }}
       >
         <div className="flex h-full min-h-0 flex-col">
           <Outline

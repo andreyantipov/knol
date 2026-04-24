@@ -521,6 +521,8 @@ const Row = memo(function Row({
   onSelect,
   onToggleDir,
 }: RowProps) {
+  if (row.kind === "root") return null;
+
   if (row.kind === "empty") {
     return (
       <div
